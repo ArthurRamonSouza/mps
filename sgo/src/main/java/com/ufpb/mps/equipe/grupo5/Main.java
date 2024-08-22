@@ -1,6 +1,7 @@
 package com.ufpb.mps.equipe.grupo5;
 import java.util.Scanner;
-import com.ufpb.mps.equipe.grupo5.controllers.UserController;
+
+import com.ufpb.mps.equipe.grupo5.controller.UserController;
 
 public class Main {
     public static void main(String[] args) {
