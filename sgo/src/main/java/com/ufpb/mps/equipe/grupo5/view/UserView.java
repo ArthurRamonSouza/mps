@@ -40,66 +40,66 @@ public class UserView {
     }
 
     public void registerUser() {
-        while (true) {
-            System.out.println("Digite o CPF:");
-            String cpf = scanner.nextLine();
-            
-            System.out.println("Digite o nome:");
-            String name = scanner.nextLine();
+        System.out.println("Digite o CPF:");
+        String cpf = scanner.nextLine();
+        
+        System.out.println("Digite o nome:");
+        String name = scanner.nextLine();
 
-            System.out.println("Digite o e-mail:");
-            String email = scanner.nextLine();
+        System.out.println("Digite o e-mail:");
+        String email = scanner.nextLine();
 
-            System.out.println("Digite a matrícula:");
-            String companyId = scanner.nextLine();
+        System.out.println("Digite a matrícula:");
+        String companyId = scanner.nextLine();
 
-            System.out.println("Digite o setor:");
-            String sector = scanner.nextLine();
+        System.out.println("Digite o setor:");
+        String sector = scanner.nextLine();
 
-            System.out.println("Digite o nível de acesso (ADMINISTRADOR, CHEFE_DE_SETOR, ORCAMENTISTA, COTACIONISTA):");
-            String accessLevel  = scanner.nextLine();
-            
-            User user = new User(cpf, name, email, companyId, sector, new Date(), accessLevel , true);
+        System.out.println("Digite o nível de acesso (ADMINISTRADOR, CHEFE_DE_SETOR, ORCAMENTISTA, COTACIONISTA):");
+        String accessLevel  = scanner.nextLine();
+        
+        User user = new User(cpf, name, email, companyId, sector, new Date(), accessLevel , true);
 
-            System.out.println("Qual método de persistência?");
-            System.out.println("1. Coleção");
-            System.out.println("2. Banco de dados");
-            System.out.println("3. Sair");
+        System.out.println("Qual método de persistência?");
+        System.out.println("1. Coleção");
+        System.out.println("2. Banco de dados");
+        System.out.println("3. Sair");
 
-            int in = scanner.nextInt();
-            scanner.nextLine();
+        int in = scanner.nextInt();
+        scanner.nextLine();
 
-            switch (in) {
-                case 1 -> userController.registerUserCollection(user);
-                case 2 -> userController.registerUserDatabase(user);
-                case 3 -> {
-                    System.out.println("Saindo...");
-                    return;
-                }
-                default -> System.out.println("Opção inválida. Tente novamente.");
+        switch (in) {
+            case 1 -> System.out.println(userController.registerUserCollection(user));
+            case 2 -> System.out.println(userController.registerUserDatabase(user));
+            case 3 -> {
+                System.out.println("Saindo...");
+                return;
             }
+            default -> System.out.println("Opção inválida. Tente novamente.");
         }
     }
 
     public void listUsers() {
-        List<String> users;
+        List<User> users;
         while (true) {
             System.out.println("Qual base você deseja listar?");
             System.out.println("1. Coleção");
             System.out.println("2. Banco de dados");
             System.out.println("3. Sair");
-
+    
             int in = scanner.nextInt();
             scanner.nextLine();
-
+    
             switch (in) {
                 case 1 -> {
                     users = userController.listUsersCollection();
+                    System.out.println(String.format("%d usuários foram recuperados da coleção.", users.size()));
                     users.forEach(System.out::println);
                 }
                 case 2 -> {
                     users = userController.listUsersDatabase();
-                    users.forEach(System.out::println);
+                    System.out.println(String.format("%d usuários foram recuperados do banco de dados.", users.size()));
+                    users.forEach(user -> System.out.println(user.toString()));
                 }
                 case 3 -> {
                     System.out.println("Saindo...");
@@ -109,4 +109,6 @@ public class UserView {
             }
         }
     }
+    
+    
 }
