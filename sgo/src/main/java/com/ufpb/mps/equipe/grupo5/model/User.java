@@ -20,19 +20,19 @@ import lombok.Setter;
 @Entity
 public class User {
 
-    @NotNull(message = "O nome não pode ser nulo.")
-    @NotBlank(message = "O nome não pode estar em branco.")
-    @Size(max = 200, message = "O nome deve ter no máximo 200 caracteres.")
-    @Getter @Setter
-    private String name;
-
     @NotNull(message = "O CPF não pode ser nulo.")
     @NotBlank(message = "O CPF não pode estar em branco.")
     @Size(max = 11, message = "O CPF deve ter no máximo 11 caracteres.")
     @Pattern(regexp = "\\d{11}", message = "Apenas números. Deve conter 11 dígitos.")
     @Getter @Setter
     @Id
+
     private String cpf;
+    @NotNull(message = "O nome não pode ser nulo.")
+    @NotBlank(message = "O nome não pode estar em branco.")
+    @Size(max = 200, message = "O nome deve ter no máximo 200 caracteres.")
+    @Getter @Setter
+    private String name;
 
     @Email(message = "Lembre-se de inserir um e-mail válido.")
     @NotNull(message = "O e-mail não pode ser nulo.")
