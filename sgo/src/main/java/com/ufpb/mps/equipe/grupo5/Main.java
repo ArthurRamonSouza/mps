@@ -1,32 +1,40 @@
 package com.ufpb.mps.equipe.grupo5;
+
 import java.util.Scanner;
-import com.ufpb.mps.equipe.grupo5.controllers.UserController;
+
+import com.ufpb.mps.equipe.grupo5.view.UserView;
+
 
 public class Main {
     public static void main(String[] args) {
-        UserController controller = new UserController();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
+            System.out.println("\n=============================");
+            System.out.println("   Bem-vindo ao Sistema SGO   ");
+            System.out.println("=============================");
             System.out.println("Escolha uma opção:");
-            System.out.println("1. Adicionar usuário");
-            System.out.println("2. Listar todos os usuários");
-            System.out.println("3. Sair");
+            System.out.println("  1. Gerenciar Usuários");
+            System.out.println("  2. Sair");
+            System.out.println("=============================");
+            System.out.print("Digite a sua escolha: ");
 
-            int opcao = scanner.nextInt();
-            scanner.nextLine();  // Consumir a nova linha
+            int in = scanner.nextInt();
+            scanner.nextLine();
 
-            switch (opcao) {
-                case 1 -> controller.registerUser();
-                case 2 -> controller.listUsers();
-                case 3 -> {
-                    System.out.println("Saindo...");
+            switch (in) {
+                case 1 -> {
+                    UserView userView = new UserView(scanner);
+                    userView.userMenu();
+                }
+                case 2 -> {
+                    System.out.println("\nObrigado por usar o Sistema SGO!");
+                    System.out.println("Encerrando o programa...");
                     scanner.close();
                     return;
                 }
-                default -> System.out.println("Opção inválida. Tente novamente.");
+                default -> System.out.println("\nOpção inválida. Por favor, tente novamente.");
             }
         }
     }
 }
-
