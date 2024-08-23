@@ -69,8 +69,8 @@ public class UserView {
         scanner.nextLine();
 
         switch (in) {
-            case 1 -> System.out.println(userController.registerUserCollection(user));
-            case 2 -> System.out.println(userController.registerUserDatabase(user));
+            case 1 -> userController.registerUserCollection(user);
+            case 2 -> userController.registerUserDatabase(user);
             case 3 -> {
                 System.out.println("Saindo...");
                 return;
@@ -93,12 +93,12 @@ public class UserView {
             switch (in) {
                 case 1 -> {
                     users = userController.listUsersCollection();
-                    System.out.println(String.format("%d usuários foram recuperados da coleção.", users.size()));
+                    System.out.printf("%d usuários foram recuperados da coleção.%n", users.size());
                     users.forEach(System.out::println);
                 }
                 case 2 -> {
                     users = userController.listUsersDatabase();
-                    System.out.println(String.format("%d usuários foram recuperados do banco de dados.", users.size()));
+                    System.out.printf("%d usuários foram recuperados do banco de dados.%n", users.size());
                     users.forEach(user -> System.out.println(user.toString()));
                 }
                 case 3 -> {

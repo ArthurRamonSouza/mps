@@ -18,21 +18,12 @@ public class UserController {
         this.userDatabaseService = new UserDatabaseService();
     }
 
-    public String registerUserCollection(User user) {
+    public void registerUserCollection(User user) {
         userCollectionService.save(user);
-        return "O usuário foi registrado no banco de dados e na coleção.";
     }
 
-    public  String registerUserDatabase(User user) {
-        String message = "O usuário foi registrado no banco de dados.";
-
-        try {
-            userDatabaseService.save(user);
-        } catch(Error e) {
-            return message = "Erro ao slavar o usuário no banco de dados.";
-        }
-
-        return message;
+    public void registerUserDatabase(User user) {
+        userDatabaseService.save(user);
     }
 
     public List<User> listUsersCollection() {
