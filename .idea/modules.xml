@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/mps.iml" filepath="$PROJECT_DIR$/.idea/mps.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sgo/sgo.iml" filepath="$PROJECT_DIR$/sgo/sgo.iml" />
     </modules>
   </component>
 </project>
