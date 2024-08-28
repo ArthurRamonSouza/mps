@@ -7,6 +7,8 @@ import java.util.Optional;
 import com.ufpb.mps.equipe.grupo5.model.User;
 import com.ufpb.mps.equipe.grupo5.service.UserCollectionService;
 import com.ufpb.mps.equipe.grupo5.service.UserDatabaseService;
+import com.ufpb.mps.equipe.grupo5.util.LoginValidator;
+import com.ufpb.mps.equipe.grupo5.util.PasswordValidator;
 
 public class UserController {
     
@@ -19,10 +21,13 @@ public class UserController {
     }
 
     public void registerUserCollection(User user) {
+        LoginValidator.validateLogin(user.getLogin());
+        PasswordValidator.validatePassword(user);
         userCollectionService.save(user);
     }
 
     public void registerUserDatabase(User user) {
+        LoginValidator.validateLogin(user.getLogin());
         userDatabaseService.save(user);
     }
 

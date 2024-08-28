@@ -49,6 +49,12 @@ public class UserView {
         System.out.println("Digite o e-mail:");
         String email = scanner.nextLine();
 
+        System.out.println("Digite o login:");
+        String login = scanner.nextLine();
+
+        System.out.println("Digite a senha:");
+        String password = scanner.nextLine();
+
         System.out.println("Digite a matrícula:");
         String companyId = scanner.nextLine();
 
@@ -58,7 +64,7 @@ public class UserView {
         System.out.println("Digite o nível de acesso (ADMINISTRADOR, CHEFE_DE_SETOR, ORCAMENTISTA, COTACIONISTA):");
         String accessLevel  = scanner.nextLine();
         
-        User user = new User(cpf, name, email, companyId, sector, new Date(), accessLevel , true);
+        User user = new User(cpf, name, email, login, password, companyId, sector, new Date(), accessLevel , true);
 
         System.out.println("Qual método de persistência?");
         System.out.println("1. Coleção");
