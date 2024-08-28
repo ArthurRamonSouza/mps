@@ -22,8 +22,7 @@ public class UserView {
             System.out.println("Escolha uma opção:");
             System.out.println("1. Adicionar usuário");
             System.out.println("2. Listar todos os usuários");
-            System.out.println("3. Realizar Login");
-            System.out.println("4. Sair");
+            System.out.println("3. Sair");
 
             int in = scanner.nextInt();
             scanner.nextLine();
@@ -31,8 +30,7 @@ public class UserView {
             switch (in) {
                 case 1 -> registerUser();
                 case 2 -> listUsers();
-                case 3 -> loginUser();
-                case 4 -> {
+                case 3 -> {
                     System.out.println("Saindo...");
                     return;
                 }
