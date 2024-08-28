@@ -2,7 +2,6 @@ package com.ufpb.mps.equipe.grupo5.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import com.ufpb.mps.equipe.grupo5.model.User;
 import com.ufpb.mps.equipe.grupo5.service.UserCollectionService;
@@ -21,14 +20,26 @@ public class UserController {
     }
 
     public void registerUserCollection(User user) {
-        LoginValidator.validateLogin(user.getLogin());
-        PasswordValidator.validatePassword(user);
-        userCollectionService.save(user);
+        try {
+            LoginValidator.validateLogin(user.getLogin());
+            PasswordValidator.validatePassword(user);
+            userCollectionService.save(user);
+            System.out.println("Usuário registrado com sucesso na coleção.");
+
+        } catch (Exception e) {
+            System.err.println("Erro ao registrar usuário na coleção: " + e.getMessage());
+        }
     }
 
     public void registerUserDatabase(User user) {
-        LoginValidator.validateLogin(user.getLogin());
-        userDatabaseService.save(user);
+        try {
+            LoginValidator.validateLogin(user.getLogin());
+            PasswordValidator.validatePassword(user);
+            userDatabaseService.save(user);
+            System.out.println("Usuário registrado com sucesso no banco de dados.");
+        } catch (Exception e) {
+            System.err.println("Erro ao registrar usuário no banco de dados: " + e.getMessage());
+        }
     }
 
     public List<User> listUsersCollection() {
@@ -44,4 +55,9 @@ public class UserController {
 
         return new ArrayList<User>();
     }
+
+    public boolean loginUser(String login, String password) {
+        return userDatabaseService.login(login, password);
+    }
+
 }

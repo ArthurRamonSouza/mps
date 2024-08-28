@@ -22,7 +22,8 @@ public class UserView {
             System.out.println("Escolha uma opção:");
             System.out.println("1. Adicionar usuário");
             System.out.println("2. Listar todos os usuários");
-            System.out.println("3. Sair");
+            System.out.println("3. Realizar Login");
+            System.out.println("4. Sair");
 
             int in = scanner.nextInt();
             scanner.nextLine();
@@ -30,13 +31,29 @@ public class UserView {
             switch (in) {
                 case 1 -> registerUser();
                 case 2 -> listUsers();
-                case 3 -> {
+                case 3 -> loginUser();
+                case 4 -> {
                     System.out.println("Saindo...");
                     return;
                 }
                 default -> System.out.println("Opção inválida. Tente novamente.");
             }
         }
+    }
+
+    private void loginUser() {
+        System.out.println("Digite o login:");
+        String login = scanner.nextLine();
+
+        System.out.println("Digite a senha:");
+        String password = scanner.nextLine();
+
+        if(userController.loginUser(login, password)) {
+            System.out.println("Login realizado com sucesso!");
+        } else {
+            System.out.println("Login inválido.");
+        }
+
     }
 
     public void registerUser() {

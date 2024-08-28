@@ -41,8 +41,11 @@ public class User {
     @NotBlank(message = "O e-mail não pode estar em branco.")
     @Size(max = 255, message = "O e-mail deve ter no máximo 255 caracteres.")
     private String email;
+
     private String login;
+
     private String password;
+    
     @NotNull(message = "A matrícula não pode ser nula.")
     @NotBlank(message = "A matrícula não pode estar em branco.")
     @Size(max = 20, message = "A matrícula deve ter no máximo 20 caracteres.")

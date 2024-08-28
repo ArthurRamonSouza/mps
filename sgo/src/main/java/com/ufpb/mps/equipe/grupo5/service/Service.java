@@ -9,4 +9,6 @@ public interface Service<T> {
 
     public Optional<List<T>> findAll();
 
+    public Optional<T> findByLogin(String login);
+
 }

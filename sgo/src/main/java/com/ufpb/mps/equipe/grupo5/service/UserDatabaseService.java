@@ -28,11 +28,11 @@ public class UserDatabaseService implements Service<User> {
             System.out.println("Usuário salvo com sucesso.");
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
-            e.printStackTrace();
             System.out.println("Erro ao tentar persistir um usuário no banco.");
         }
     }
 
+    
     @Override
     public Optional<List<User>> findAll() {
         try {
@@ -41,13 +41,43 @@ public class UserDatabaseService implements Service<User> {
         } catch (Exception e) {
             System.out.println("Erro ao tentar listar um usuário no banco.");
             entityManager.getTransaction().rollback();
-            e.printStackTrace();
             return Optional.ofNullable(usersRecovered);
         }
         return Optional.ofNullable(usersRecovered);
         
     }
 
+    @Override
+    public Optional<User> findByLogin(String login) {
+        try {
+            usersRecovered = entityManager.createQuery("SELECT u FROM User u WHERE u.login = :login", User.class)
+            .setParameter("login", login)
+            .getResultList();           
+        
+        } catch (Exception e) {
+            System.out.println("Erro ao tentar recuperar o login no banco.");
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            return Optional.empty();
+        }
+    
+        if (usersRecovered != null && !usersRecovered.isEmpty()) {
+            return Optional.of(usersRecovered.get(0));
+        } else {
+            return Optional.empty();
+        }        
+    }
+
+    public boolean login(String login, String password) {
+        User user = this.findByLogin(login).get();
+
+        if(user.getPassword().equals(password))
+            return true;
+
+        return false;
+    }
+    
     public void disconnect() {
         entityManager.close();
     }

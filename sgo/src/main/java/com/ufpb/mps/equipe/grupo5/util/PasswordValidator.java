@@ -8,21 +8,21 @@ import java.util.regex.Pattern;
 public class PasswordValidator {
     public static void validatePassword(User user) throws InvalidPasswordException {
         if (user.getPassword() == null || user.getPassword().isEmpty()) {
-            throw new InvalidPasswordException("A user.getPassword() não pode ser vazia.");
+            throw new InvalidPasswordException("A senha não pode ser vazia.");
         }
 
         if (user.getPassword().length() < 8 || user.getPassword().length() > 128) {
-            throw new InvalidPasswordException("A user.getPassword() deve ter entre 8 e 128 caracteres.");
+            throw new InvalidPasswordException("A senha deve ter entre 8 e 128 caracteres.");
         }
 
         if (user.getPassword().equalsIgnoreCase(user.getName()) || user.getPassword().equalsIgnoreCase(user.getEmail()) || user.getPassword().equalsIgnoreCase(user.getCpf())) {
-            throw new InvalidPasswordException("A user.getPassword() não pode ser igual ao user.getNome(), user.getEmail() ou CPF.");
+            throw new InvalidPasswordException("A senha não pode ser igual ao nome, email ou CPF do usuário.");
         }
 
-        // Expressão regular para verificar a complexidade da user.getPassword()
+        // Expressão regular para verificar a complexidade da s
         String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&*()_+-=[]{}|']).{8,128}$";
         if (!Pattern.matches(regex, user.getPassword())) {
-            throw new InvalidPasswordException("A user.getPassword() deve conter pelo menos uma letra maiúscula, uma minúscula, um número e um caractere especial.");
+            throw new InvalidPasswordException("A senha deve conter pelo menos uma letra maiúscula, uma minúscula, um número e um caractere especial.");
         }
     }
 }

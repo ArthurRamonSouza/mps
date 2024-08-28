@@ -24,4 +24,16 @@ public class UserCollectionService implements Service<User> {
     public Optional<List<User>> findAll() {
         return Optional.ofNullable(userArray);
     }
+
+    @Override
+    public Optional<User> findByLogin(String login) {
+        for (User user : userArray) {
+            if(user.getLogin() == login)
+                return Optional.of(user);
+        }
+
+        return Optional.empty(); 
+    }
+
+    
 }
