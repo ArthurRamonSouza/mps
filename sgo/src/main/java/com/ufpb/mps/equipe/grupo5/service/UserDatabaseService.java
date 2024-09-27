@@ -12,9 +12,10 @@ import jakarta.persistence.EntityManager;
 public class UserDatabaseService implements Service<User> {
 
     private final UserRepository userRepository;
+    private final EntityManager entityManager;
 
     public UserDatabaseService() {
-        EntityManager entityManager = JpaUtil.getEntityManager();
+        this.entityManager = JpaUtil.getEntityManager();
         this.userRepository = new UserRepository(entityManager);
     }
 
@@ -31,6 +32,16 @@ public class UserDatabaseService implements Service<User> {
     @Override
     public Optional<User> findByLogin(String login) {
         return userRepository.findByLogin(login);
+    }
+
+    @Override
+    public void update(User updatedUser) {
+        userRepository.update(updatedUser);
+    }
+
+    @Override
+    public void delete(User userToDelete) {
+        userRepository.delete(userToDelete.getCpf());
     }
 
     public boolean login(String login, String password) {

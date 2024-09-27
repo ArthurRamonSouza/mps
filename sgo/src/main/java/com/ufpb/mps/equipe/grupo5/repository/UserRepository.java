@@ -1,7 +1,5 @@
 package com.ufpb.mps.equipe.grupo5.repository;
 
-package com.ufpb.mps.equipe.grupo5.repository;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -32,10 +30,9 @@ public class UserRepository {
     public Optional<List<User>> findAll() {
         List<User> usersRecovered;
         try {
-            usersRecovered = entityManager.createQuery("from User", User.class).getResultList();            
+            usersRecovered = entityManager.createQuery("from User", User.class).getResultList();
         } catch (Exception e) {
             System.out.println("Erro ao tentar listar usuários no banco.");
-            entityManager.getTransaction().rollback();
             return Optional.empty();
         }
         return Optional.ofNullable(usersRecovered);
@@ -46,12 +43,9 @@ public class UserRepository {
         try {
             usersRecovered = entityManager.createQuery("SELECT u FROM User u WHERE u.login = :login", User.class)
                 .setParameter("login", login)
-                .getResultList();           
+                .getResultList();
         } catch (Exception e) {
             System.out.println("Erro ao tentar recuperar o login no banco.");
-            if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
-            }
             return Optional.empty();
         }
 
@@ -59,6 +53,36 @@ public class UserRepository {
             return Optional.of(usersRecovered.get(0));
         } else {
             return Optional.empty();
+        }
+    }
+
+    public void update(User user) {
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(user); // Atualiza a entidade existente
+            entityManager.getTransaction().commit();
+            System.out.println("Usuário atualizado com sucesso.");
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            System.out.println("Erro ao tentar atualizar o usuário no banco.");
+        }
+    }
+
+    public void delete(String userCpf) {
+        try {
+            entityManager.getTransaction().begin();
+            User user = entityManager.find(User.class, userCpf);
+            if (user != null) {
+                entityManager.remove(user);
+                entityManager.getTransaction().commit();
+                System.out.println("Usuário removido com sucesso.");
+            } else {
+                entityManager.getTransaction().rollback();
+                System.out.println("Usuário não encontrado.");
+            }
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            System.out.println("Erro ao tentar remover o usuário do banco.");
         }
     }
 }

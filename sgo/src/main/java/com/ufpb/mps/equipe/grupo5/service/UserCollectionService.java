@@ -28,12 +28,34 @@ public class UserCollectionService implements Service<User> {
     @Override
     public Optional<User> findByLogin(String login) {
         for (User user : userArray) {
-            if(user.getLogin() == login)
+            if(user.getLogin().equals(login))
                 return Optional.of(user);
         }
 
         return Optional.empty(); 
     }
 
-    
+    @Override
+    public void update(User updatedUser) {
+        for (int i = 0; i < userArray.size(); i++) {
+            User user = userArray.get(i);
+            if (user.getLogin().equals(updatedUser.getLogin())) {
+                userArray.set(i, updatedUser);  // Substitui o usuário existente pelo atualizado
+                System.out.println(String.format("Usuário %s atualizado na coleção.", updatedUser.getName()));
+                return;
+            }
+        }
+        System.out.println("Usuário não encontrado para atualização.");
+    }
+
+    @Override
+    public void delete(User userToDelete) {
+        Optional<User> userOptional = findByLogin(userToDelete.getLogin());
+        if (userOptional.isPresent()) {
+            userArray.remove(userOptional.get());
+            System.out.println(String.format("Usuário %s removido da coleção.", userToDelete.getName()));
+        } else {
+            System.out.println("Usuário não encontrado para remoção.");
+        }
+    }
 }

@@ -11,12 +11,21 @@ import com.ufpb.mps.equipe.grupo5.util.PasswordValidator;
 
 public class UserController {
     
+    private static UserController instance;
+    
     private final UserCollectionService userCollectionService;
     private final UserDatabaseService userDatabaseService;
 
-    public UserController() {
+    private UserController() {
         this.userCollectionService = new UserCollectionService();
         this.userDatabaseService = new UserDatabaseService();
+    }
+
+    public static UserController getInstance() {
+        if (instance == null) {
+            instance = new UserController();
+        }
+        return instance;
     }
 
     public void registerUserCollection(User user) {
@@ -25,7 +34,6 @@ public class UserController {
             PasswordValidator.validatePassword(user);
             userCollectionService.save(user);
             System.out.println("Usuário registrado com sucesso na coleção.");
-
         } catch (Exception e) {
             System.err.println("Erro ao registrar usuário na coleção: " + e.getMessage());
         }
@@ -43,21 +51,14 @@ public class UserController {
     }
 
     public List<User> listUsersCollection() {
-        if(userCollectionService.findAll().isPresent())
-            return userCollectionService.findAll().get();
-
-        return new ArrayList<User>();
+        return userCollectionService.findAll().orElse(new ArrayList<User>());
     }
 
     public List<User> listUsersDatabase() {
-        if(userDatabaseService.findAll().isPresent())
-            return userDatabaseService.findAll().get();
-
-        return new ArrayList<User>();
+        return userDatabaseService.findAll().orElse(new ArrayList<User>());
     }
 
     public boolean loginUser(String login, String password) {
         return userDatabaseService.login(login, password);
     }
-
 }

@@ -11,4 +11,7 @@ public interface Service<T> {
 
     public Optional<T> findByLogin(String login);
 
+    public void update(T entity);
+
+    public void delete(T entity);
 }
