@@ -21,7 +21,7 @@ public class UserController {
         this.userDatabaseService = new UserDatabaseService();
     }
 
-    public static UserController getInstance() {
+    public static synchronized UserController getInstance() {
         if (instance == null) {
             instance = new UserController();
         }

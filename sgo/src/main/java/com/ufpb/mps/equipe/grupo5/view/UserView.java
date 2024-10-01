@@ -4,16 +4,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-import com.ufpb.mps.equipe.grupo5.controller.UserController;
+import com.ufpb.mps.equipe.grupo5.facade.Facade;
 import com.ufpb.mps.equipe.grupo5.model.User;
 
 public class UserView {
-
-    private final UserController userController;
+    
+    private final Facade facade;
     private final Scanner scanner;
 
     public UserView(Scanner scanner) {
-        this.userController = new UserController();
+        this.facade = Facade.getInstance();
         this.scanner = scanner;
     }
 
@@ -46,7 +46,7 @@ public class UserView {
         System.out.println("Digite a senha:");
         String password = scanner.nextLine();
 
-        if(userController.loginUser(login, password)) {
+        if(facade.loginUser(login, password)) {
             System.out.println("Login realizado com sucesso!");
         } else {
             System.out.println("Login inválido.");
@@ -90,8 +90,8 @@ public class UserView {
         scanner.nextLine();
 
         switch (in) {
-            case 1 -> userController.registerUserCollection(user);
-            case 2 -> userController.registerUserDatabase(user);
+            case 1 -> facade.registerUserCollection(user);
+            case 2 -> facade.registerUserDatabase(user);
             case 3 -> {
                 System.out.println("Saindo...");
                 return;
@@ -113,12 +113,12 @@ public class UserView {
     
             switch (in) {
                 case 1 -> {
-                    users = userController.listUsersCollection();
+                    users = facade.listUsersCollection();
                     System.out.printf("%d usuários foram recuperados da coleção.%n", users.size());
                     users.forEach(System.out::println);
                 }
                 case 2 -> {
-                    users = userController.listUsersDatabase();
+                    users = facade.listUsersDatabase();
                     System.out.printf("%d usuários foram recuperados do banco de dados.%n", users.size());
                     users.forEach(user -> System.out.println(user.toString()));
                 }
