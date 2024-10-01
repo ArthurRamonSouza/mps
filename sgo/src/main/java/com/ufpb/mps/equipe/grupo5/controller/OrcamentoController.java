@@ -16,7 +16,7 @@ public class OrcamentoController {
         this.orcamentoDatabaseService = new OrcamentoDatabaseService();
     }
 
-    public static OrcamentoController getInstance() {
+    public static synchronized OrcamentoController getInstance() {
         if (instance == null) {
             instance = new OrcamentoController();
         }

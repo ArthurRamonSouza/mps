@@ -6,16 +6,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-import com.ufpb.mps.equipe.grupo5.controller.OrcamentoController;
+import com.ufpb.mps.equipe.grupo5.facade.Facade;
 import com.ufpb.mps.equipe.grupo5.model.Orcamento;
 
 public class OrcamentoView {
 
-    private final OrcamentoController orcamentoController;
+    private final Facade facade;
     private final Scanner scanner;
 
     public OrcamentoView(Scanner scanner) {
-        this.orcamentoController = OrcamentoController.getInstance(); // Singleton
+        this.facade = Facade.getInstance(); // Singleton
         this.scanner = scanner;
     }
 
@@ -82,11 +82,11 @@ public class OrcamentoView {
         orcamento.setValorTotal(valorTotal);
         orcamento.setDataCriacao(new Date());
 
-        orcamentoController.registerOrcamento(orcamento);
+        facade.registerOrcamento(orcamento);
     }
 
     public void listOrcamentos() {
-        List<Orcamento> orcamentos = orcamentoController.listOrcamentos();
+        List<Orcamento> orcamentos = facade.listOrcamentos();
         System.out.printf("%d orçamentos foram recuperados.%n", orcamentos.size());
         orcamentos.forEach(System.out::println);
     }
