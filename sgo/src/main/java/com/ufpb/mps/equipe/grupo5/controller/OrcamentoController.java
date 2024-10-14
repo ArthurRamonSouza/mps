@@ -23,7 +23,7 @@ public class OrcamentoController {
         return instance;
     }
 
-    public void registerOrcamento(Orcamento orcamento) {
+    public void registerOrcamentoDatabase(Orcamento orcamento) {
         try {
             OrcamentoValidator.validateOrcamento(orcamento);
             orcamentoDatabaseService.save(orcamento);
@@ -50,7 +50,7 @@ public class OrcamentoController {
         }
     }
 
-    public void deleteOrcamento(Orcamento orcamento) {
+    public void deleteOrcamentoDatabase(Orcamento orcamento) {
         try {
             orcamentoDatabaseService.delete(orcamento);
             System.out.println("Orçamento deletado com sucesso.");

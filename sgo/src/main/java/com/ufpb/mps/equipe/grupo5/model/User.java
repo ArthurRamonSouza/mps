@@ -1,6 +1,9 @@
 package com.ufpb.mps.equipe.grupo5.model;
 
 import java.util.Date;
+import java.util.Stack;
+
+import com.ufpb.mps.equipe.grupo5.memento.UserMemento;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -45,7 +48,7 @@ public class User {
     private String login;
 
     private String password;
-    
+
     @NotNull(message = "A matrícula não pode ser nula.")
     @NotBlank(message = "A matrícula não pode estar em branco.")
     @Size(max = 20, message = "A matrícula deve ter no máximo 20 caracteres.")
@@ -71,6 +74,8 @@ public class User {
     @Column(name = "is_active")
     private boolean isActive;
 
+    private Stack<UserMemento> mementoHistory = new Stack<UserMemento>();
+
     @Override
     public String toString() {
         return "User{" +
@@ -84,5 +89,27 @@ public class User {
                 ", isActive=" + isActive +
                 '}';
     }
+
+     public void addSnapshot() {
+        this.mementoHistory.push(new UserMemento(this));
+    }
+
+    public void restore() {
+        if (this.mementoHistory.isEmpty()) return;
+    
+        UserMemento memento = this.mementoHistory.pop();
+    
+        this.cpf = memento.getCpf();
+        this.name = memento.getName();
+        this.email = memento.getEmail();
+        this.login = memento.getLogin();
+        this.password = memento.getPassword();
+        this.companyId = memento.getCompanyId();
+        this.sector = memento.getSector();
+        this.entryDate = new Date(memento.getEntryDate().getTime());
+        this.accessLevel = memento.getAccessLevel();
+        this.isActive = memento.isActive();
+    }
+    
 
 }

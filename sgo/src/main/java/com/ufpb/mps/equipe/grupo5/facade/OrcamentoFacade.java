@@ -22,7 +22,7 @@ public class OrcamentoFacade {
 
 
     public void registerOrcamento(Orcamento orcamento) {
-        orcamentoController.registerOrcamento(orcamento);
+        orcamentoController.registerOrcamentoDatabase(orcamento);
     }
 
     public List<Orcamento> listOrcamentos() {
@@ -34,7 +34,7 @@ public class OrcamentoFacade {
     }
 
     public void deleteOrcamento(Orcamento orcamento) {
-        orcamentoController.deleteOrcamento(orcamento);
+        orcamentoController.deleteOrcamentoDatabase(orcamento);
     }
 
     public Orcamento findOrcamentoById(Long id) {

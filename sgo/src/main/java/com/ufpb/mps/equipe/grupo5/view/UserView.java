@@ -81,7 +81,7 @@ public class UserView {
         System.out.println("Digite o nível de acesso (ADMINISTRADOR, CHEFE_DE_SETOR, ORCAMENTISTA, COTACIONISTA):");
         String accessLevel  = scanner.nextLine();
         
-        User user = new User(cpf, name, email, login, password, companyId, sector, new Date(), accessLevel , true);
+        User user = new User(cpf, name, email, login, password, companyId, sector, new Date(), accessLevel , true, null);
 
         System.out.println("Qual método de persistência?");
         System.out.println("1. Coleção");
