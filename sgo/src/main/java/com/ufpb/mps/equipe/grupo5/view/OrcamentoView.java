@@ -6,16 +6,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-import com.ufpb.mps.equipe.grupo5.facade.Facade;
+import com.ufpb.mps.equipe.grupo5.facade.OrcamentoFacade;
 import com.ufpb.mps.equipe.grupo5.model.Orcamento;
 
 public class OrcamentoView {
 
-    private final Facade facade;
+    private final OrcamentoFacade facade;
     private final Scanner scanner;
 
     public OrcamentoView(Scanner scanner) {
-        this.facade = Facade.getInstance(); // Singleton
+        this.facade = OrcamentoFacade.getInstance(); // Singleton
         this.scanner = scanner;
     }
 
