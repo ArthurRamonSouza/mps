@@ -15,6 +15,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -74,20 +75,32 @@ public class User {
     @Column(name = "is_active")
     private boolean isActive;
 
-    private Stack<UserMemento> mementoHistory = new Stack<UserMemento>();
+    @Transient
+    private Stack<UserMemento> mementoHistory = new Stack<>();
 
     @Override
     public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", email='" + email + '\'' +
-                ", companyId='" + companyId + '\'' +
-                ", sector='" + sector + '\'' +
-                ", entryDate=" + entryDate +
-                ", accessLevel='" + accessLevel + '\'' +
-                ", isActive=" + isActive +
-                '}';
+        return String.format("User Details:%n" +
+        "------------------------------%n" +
+        "Name: %s%n" +
+        "CPF: %s%n" +
+        "Email: %s%n" +
+        "Login: %s%n" +
+        "Company ID: %s%n" +
+        "Sector: %s%n" +
+        "Entry Date: %s%n" +
+        "Access Level: %s%n" +
+        "Active: %s%n",
+        name,
+        cpf,
+        email,
+        login != null ? login : "N/A",
+        companyId,
+        sector,
+        entryDate != null ? entryDate.toString() : "N/A",
+        accessLevel,
+        isActive ? "Yes" : "No"
+        );
     }
 
      public void addSnapshot() {

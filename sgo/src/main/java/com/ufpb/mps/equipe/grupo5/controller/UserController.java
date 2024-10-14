@@ -50,11 +50,30 @@ public class UserController {
         }
     }
 
+    public void updateUserData(User user) {
+        try {
+            LoginValidator.validateLogin(user.getLogin());
+            PasswordValidator.validatePassword(user);
+            userDatabaseService.save(user);
+            System.out.println("Usuário atualizado com sucesso no banco de dados.");
+        } catch (Exception e) {
+            System.err.println("Erro ao atualizar usuário no banco de dados: " + e.getMessage());
+        }
+    }
+
     public void deleteUserDatabase(User user) {
         try {
             userDatabaseService.delete(user);
         } catch (Exception e) {
             System.out.println("Erro ao tentar remover o usuário do banco de dados.");
+        }
+    }
+
+    public void deleteUserCollection(User user) {
+        try {
+            userCollectionService.delete(user);
+        } catch (Exception e) {
+            System.out.println("Erro ao tentar remover o usuário da coleção.");
         }
     }
 
@@ -64,6 +83,14 @@ public class UserController {
 
     public List<User> listUsersDatabase() {
         return userDatabaseService.findAll().orElse(new ArrayList<User>());
+    }
+
+    public User getUserDatabaseByLogin(String login) {
+        return userDatabaseService.findByLogin(login).get();
+    }
+
+    public User getUserCollectionByLogin(String login) {
+        return userCollectionService.findByLogin(login).get();
     }
 
     public boolean loginUser(String login, String password) {

@@ -4,8 +4,13 @@ import java.util.Date;
 
 import com.ufpb.mps.equipe.grupo5.model.Orcamento;
 import com.ufpb.mps.equipe.grupo5.model.User;
+
+import lombok.Getter;
+import lombok.Setter;
+
 import com.ufpb.mps.equipe.grupo5.model.Status;
 
+@Getter @Setter
 public class OrcamentoMemento implements Memento<Orcamento> {
     private final Long id;
     private final User orcamentista;
@@ -22,7 +27,7 @@ public class OrcamentoMemento implements Memento<Orcamento> {
     private final boolean encargosSociaisDesonerados;
     private final Status status;
     private final boolean isLicitacao;
-    private final float bdi;
+    private final double bdi;
 
     public OrcamentoMemento(Orcamento orcamento) {
         this.id = orcamento.getId();
@@ -43,74 +48,9 @@ public class OrcamentoMemento implements Memento<Orcamento> {
         this.bdi = orcamento.getBdi();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public User getOrcamentista() {
-        return orcamentista;
-    }
-
-    public Date getDataCriacao() {
-        return dataCriacao;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public String getMunicipio() {
-        return municipio;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public Date getDataBase() {
-        return dataBase;
-    }
-
-    public String getProtocolo() {
-        return protocolo;
-    }
-
-    public boolean isPermitirPrecoZerado() {
-        return permitirPrecoZerado;
-    }
-
-    public double getTotalBdi() {
-        return totalBdi;
-    }
-
-    public double getValorTotalSemBdi() {
-        return valorTotalSemBdi;
-    }
-
-    public double getValorTotal() {
-        return valorTotal;
-    }
-
-    public boolean isEncargosSociaisDesonerados() {
-        return encargosSociaisDesonerados;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public boolean isLicitacao() {
-        return isLicitacao;
-    }
-
-    public float getBdi() {
-        return bdi;
-    }
-
     @Override
     public Orcamento getState() {
         Orcamento orcamento = new Orcamento();
-        orcamento.setId(this.id);
         orcamento.setOrcamentista(this.orcamentista);
         orcamento.setDataCriacao(this.dataCriacao);
         orcamento.setDescricao(this.descricao);

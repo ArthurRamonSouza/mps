@@ -23,7 +23,9 @@ public class UserView {
             System.out.println("1. Adicionar usuário");
             System.out.println("2. Listar todos os usuários");
             System.out.println("3. Logar no sistema");
-            System.out.println("4. Sair");
+            System.out.println("4. Remover usuário");
+            System.out.println("5. Desfazer último comando");
+            System.out.println("6. Sair");
 
             int in = scanner.nextInt();
             scanner.nextLine();
@@ -32,7 +34,9 @@ public class UserView {
                 case 1 -> registerUser();
                 case 2 -> listUsers();
                 case 3 -> loginUser();
-                case 4 -> {
+                case 4 -> removeUser();
+                case 5 -> undo();
+                case 6 -> {
                     System.out.println("Saindo...");
                     return;
                 }
@@ -57,31 +61,34 @@ public class UserView {
     }
 
     public void registerUser() {
+        User user = new User();
+        
         System.out.println("Digite o CPF:");
-        String cpf = scanner.nextLine();
-        
+        user.setCpf(scanner.nextLine());
+    
         System.out.println("Digite o nome:");
-        String name = scanner.nextLine();
-
+        user.setName(scanner.nextLine());
+    
         System.out.println("Digite o e-mail:");
-        String email = scanner.nextLine();
-
+        user.setEmail(scanner.nextLine());
+    
         System.out.println("Digite o login:");
-        String login = scanner.nextLine();
-
+        user.setLogin(scanner.nextLine());
+    
         System.out.println("Digite a senha:");
-        String password = scanner.nextLine();
-
+        user.setPassword(scanner.nextLine());
+    
         System.out.println("Digite a matrícula:");
-        String companyId = scanner.nextLine();
-
+        user.setCompanyId(scanner.nextLine());
+    
         System.out.println("Digite o setor:");
-        String sector = scanner.nextLine();
-
+        user.setSector(scanner.nextLine());
+    
         System.out.println("Digite o nível de acesso (ADMINISTRADOR, CHEFE_DE_SETOR, ORCAMENTISTA, COTACIONISTA):");
-        String accessLevel  = scanner.nextLine();
+        user.setAccessLevel(scanner.nextLine());
         
-        User user = new User(cpf, name, email, login, password, companyId, sector, new Date(), accessLevel , true, null);
+        user.setEntryDate(new Date()); 
+        user.setActive(true); 
 
         System.out.println("Qual método de persistência?");
         System.out.println("1. Coleção");
@@ -94,6 +101,33 @@ public class UserView {
         switch (in) {
             case 1 -> facade.registerUserCollection(user);
             case 2 -> facade.registerUserDatabase(user);
+            case 3 -> System.out.println("Saindo...");
+
+            default -> System.out.println("Opção inválida. Tente novamente.");
+        }
+    }
+
+    public void listUsers() {
+        List<User> users;
+        System.out.println("Qual base você deseja listar?");
+        System.out.println("1. Coleção");
+        System.out.println("2. Banco de dados");
+        System.out.println("3. Sair");
+
+        int in = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (in) {
+            case 1 -> {
+                users = facade.listUsersCollection();
+                System.out.printf("%d usuários foram recuperados da coleção.%n", users.size());
+                users.forEach(System.out::println);
+            }
+            case 2 -> {
+                users = facade.listUsersDatabase();
+                System.out.printf("%d usuários foram recuperados do banco de dados.%n", users.size());
+                users.forEach(user -> System.out.println(user.toString()));
+            }
             case 3 -> {
                 System.out.println("Saindo...");
                 return;
@@ -101,37 +135,34 @@ public class UserView {
             default -> System.out.println("Opção inválida. Tente novamente.");
         }
     }
-
-    public void listUsers() {
-        List<User> users;
-        while (true) {
-            System.out.println("Qual base você deseja listar?");
-            System.out.println("1. Coleção");
-            System.out.println("2. Banco de dados");
-            System.out.println("3. Sair");
     
+    public void removeUser() {
+        System.out.println("Digite o login do usuário a ser removido:");
+        String login = scanner.nextLine();
+
+        System.out.println("Qual base você deseja remover o usuário?");
+        System.out.println("1. Coleção");
+        System.out.println("2. Banco de dados");
+        System.out.println("3. Sair");
+
+        try {
             int in = scanner.nextInt();
             scanner.nextLine();
-    
+
             switch (in) {
-                case 1 -> {
-                    users = facade.listUsersCollection();
-                    System.out.printf("%d usuários foram recuperados da coleção.%n", users.size());
-                    users.forEach(System.out::println);
-                }
-                case 2 -> {
-                    users = facade.listUsersDatabase();
-                    System.out.printf("%d usuários foram recuperados do banco de dados.%n", users.size());
-                    users.forEach(user -> System.out.println(user.toString()));
-                }
-                case 3 -> {
-                    System.out.println("Saindo...");
-                    return;
-                }
+                case 1 -> facade.deleteUserCollection(facade.getUserCollectionByLogin(login));
+                case 2 -> facade.deleteUserDatabase(facade.getUserDatabaseByLogin(login));
+                case 3 -> System.out.println("Saindo...");
                 default -> System.out.println("Opção inválida. Tente novamente.");
             }
+        } catch (Exception e) {
+            System.out.println("Erro: Entrada inválida. Tente novamente.");
+            scanner.nextLine();
         }
     }
-    
+
+    public void undo() {
+        this.facade.undo();
+    }
     
 }

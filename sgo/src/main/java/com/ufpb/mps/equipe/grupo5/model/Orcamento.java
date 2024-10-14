@@ -5,20 +5,11 @@ import java.util.Stack;
 
 import com.ufpb.mps.equipe.grupo5.memento.OrcamentoMemento;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,8 +26,8 @@ public class Orcamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "orcamentista_id", nullable = true)
+    @ManyToOne()
+    @JoinColumn(name = "orcamentista_id")
     private User orcamentista;
 
     @NotNull
@@ -63,13 +54,13 @@ public class Orcamento {
     @Column(name = "permitir_preco_zerado")
     private boolean permitirPrecoZerado;
 
-    @Column(name = "total_bdi", precision = 12, scale = 2)
+    @Column(name = "total_bdi")
     private double totalBdi = 0.0;
 
-    @Column(name = "valor_total_sem_bdi", precision = 12, scale = 2)
+    @Column(name = "valor_total_sem_bdi")
     private double valorTotalSemBdi = 0.0;
 
-    @Column(name = "valor_total", precision = 12, scale = 2)
+    @Column(name = "valor_total")
     private double valorTotal = 0.0;
 
     @Column(name = "encargos_sociais_desonerados")
@@ -82,9 +73,10 @@ public class Orcamento {
     private boolean isLicitacao = false;
 
     @Column(name = "bdi")
-    private float bdi = 0.0f;
+    private double bdi = 0.0;
 
-    private Stack<OrcamentoMemento> mementoHistory = new Stack<OrcamentoMemento>();
+    @Transient
+    private Stack<OrcamentoMemento> mementoHistory = new Stack<>();
 
     @Override
     public String toString() {
@@ -104,7 +96,7 @@ public class Orcamento {
                 "\n  Encargos Sociais Desonerados: " + (encargosSociaisDesonerados ? "Sim" : "Não") + 
                 "\n  Status: " + status + 
                 "\n  É Licitação: " + (isLicitacao ? "Sim" : "Não") + 
-                "\n  BDI: " + bdi + 
+                "\n  BDI: " + String.format("%.2f", bdi) + 
                 "\n}";
     }
 
