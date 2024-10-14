@@ -50,6 +50,14 @@ public class UserController {
         }
     }
 
+    public void deleteUserDatabase(User user) {
+        try {
+            userDatabaseService.delete(user);
+        } catch (Exception e) {
+            System.out.println("Erro ao tentar remover o usuário do banco de dados.");
+        }
+    }
+
     public List<User> listUsersCollection() {
         return userCollectionService.findAll().orElse(new ArrayList<User>());
     }

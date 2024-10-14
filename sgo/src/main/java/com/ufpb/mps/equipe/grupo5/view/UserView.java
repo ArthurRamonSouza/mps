@@ -4,16 +4,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-import com.ufpb.mps.equipe.grupo5.facade.Facade;
+import com.ufpb.mps.equipe.grupo5.facade.UserFacade;
 import com.ufpb.mps.equipe.grupo5.model.User;
 
 public class UserView {
     
-    private final Facade facade;
+    private final UserFacade facade;
     private final Scanner scanner;
 
     public UserView(Scanner scanner) {
-        this.facade = Facade.getInstance();
+        this.facade = UserFacade.getInstance();
         this.scanner = scanner;
     }
 
@@ -22,7 +22,8 @@ public class UserView {
             System.out.println("Escolha uma opção:");
             System.out.println("1. Adicionar usuário");
             System.out.println("2. Listar todos os usuários");
-            System.out.println("3. Sair");
+            System.out.println("3. Logar no sistema");
+            System.out.println("4. Sair");
 
             int in = scanner.nextInt();
             scanner.nextLine();
@@ -30,7 +31,8 @@ public class UserView {
             switch (in) {
                 case 1 -> registerUser();
                 case 2 -> listUsers();
-                case 3 -> {
+                case 3 -> loginUser();
+                case 4 -> {
                     System.out.println("Saindo...");
                     return;
                 }
@@ -79,7 +81,7 @@ public class UserView {
         System.out.println("Digite o nível de acesso (ADMINISTRADOR, CHEFE_DE_SETOR, ORCAMENTISTA, COTACIONISTA):");
         String accessLevel  = scanner.nextLine();
         
-        User user = new User(cpf, name, email, login, password, companyId, sector, new Date(), accessLevel , true);
+        User user = new User(cpf, name, email, login, password, companyId, sector, new Date(), accessLevel , true, null);
 
         System.out.println("Qual método de persistência?");
         System.out.println("1. Coleção");
