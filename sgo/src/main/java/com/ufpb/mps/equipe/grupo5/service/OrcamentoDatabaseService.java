@@ -44,8 +44,12 @@ public class OrcamentoDatabaseService implements Service<Orcamento> {
     }
 
     @Override
-    public Optional<Orcamento> findByLogin(String login) {
-        // Método não relevante para o contexto de Orcamento, pois login não se aplica
-        throw new UnsupportedOperationException("Operação não suportada para Orcamento.");
+    public Optional<Orcamento> findBy(Object id) {
+       return orcamentoRepository.findById((Long) id);
+    }
+
+    @Override
+    public boolean login(String login, String password) {
+        throw new UnsupportedOperationException("Unimplemented method 'login'");
     }
 }

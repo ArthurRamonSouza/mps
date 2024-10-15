@@ -9,9 +9,11 @@ public interface Service<T> {
 
     public Optional<List<T>> findAll();
 
-    public Optional<T> findByLogin(String login);
+    public Optional<T> findBy(Object param);
 
     public void update(T entity);
 
     public void delete(T entity);
+
+    public boolean login(String login, String password);
 }

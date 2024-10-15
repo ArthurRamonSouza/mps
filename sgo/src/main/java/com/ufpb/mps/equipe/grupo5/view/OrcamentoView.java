@@ -24,7 +24,9 @@ public class OrcamentoView {
             System.out.println("Escolha uma opção:");
             System.out.println("1. Adicionar orçamento");
             System.out.println("2. Listar todos os orçamentos");
-            System.out.println("3. Sair");
+            System.out.println("3. Deletar orçamento");
+            System.out.println("4. Desfazer último comando");
+            System.out.println("5. Sair");
 
             int in = scanner.nextInt();
             scanner.nextLine();
@@ -32,7 +34,9 @@ public class OrcamentoView {
             switch (in) {
                 case 1 -> registerOrcamento();
                 case 2 -> listOrcamentos();
-                case 3 -> {
+                case 3 -> removeOrcamento();
+                case 4 -> undo();
+                case 5 -> {
                     System.out.println("Saindo...");
                     return;
                 }
@@ -62,13 +66,13 @@ public class OrcamentoView {
         boolean permitirPrecoZerado = scanner.nextBoolean();
 
         System.out.println("Digite o total BDI:");
-        Double totalBdi = scanner.nextDouble();
+        double totalBdi = scanner.nextDouble();
 
         System.out.println("Digite o valor total sem BDI:");
-        Double valorTotalSemBdi = scanner.nextDouble();
+        double valorTotalSemBdi = scanner.nextDouble();
 
         System.out.println("Digite o valor total:");
-        Double valorTotal = scanner.nextDouble();
+        double valorTotal = scanner.nextDouble();
 
         Orcamento orcamento = new Orcamento();
         orcamento.setDescricao(descricao);
@@ -99,5 +103,21 @@ public class OrcamentoView {
             System.err.println("Formato de data inválido. Usando data atual.");
             return new Date();
         }
+    }
+
+    public void removeOrcamento() {
+        System.out.println("Digite o ID do orcçamento a ser removido:");
+        
+        try {
+            Long id = scanner.nextLong();
+            facade.deleteOrcamento(facade.findOrcamentoById(id));
+        } catch (Exception e) {
+            System.out.println("Erro: Or~camento não encontrado na base de dados.");
+            scanner.nextLine();
+        }
+    }
+
+    public void undo() {
+        this.facade.undo();
     }
 }

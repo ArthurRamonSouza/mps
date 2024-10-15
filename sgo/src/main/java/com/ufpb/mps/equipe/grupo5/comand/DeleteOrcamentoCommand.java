@@ -34,5 +34,4 @@ public class DeleteOrcamentoCommand implements Command{
     public Command copy() {
         return new DeleteOrcamentoCommand(this.controller, this.orcamento);
     }
-
 }

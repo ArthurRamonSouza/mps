@@ -20,7 +20,9 @@ public class PasswordValidator {
         }
 
         // Expressão regular para verificar a complexidade da s
-        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&*()_+-=[]{}|']).{8,128}$";
+        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&*()_+\\-=\\[\\]{}|']).{8,128}$";
+
+
         if (!Pattern.matches(regex, user.getPassword())) {
             throw new InvalidPasswordException("A senha deve conter pelo menos uma letra maiúscula, uma minúscula, um número e um caractere especial.");
         }
