@@ -9,7 +9,6 @@ import com.ufpb.mps.equipe.grupo5.model.User;
 import com.ufpb.mps.equipe.grupo5.service.UserAccessDataService;
 import com.ufpb.mps.equipe.grupo5.template.HtmlReport;
 import com.ufpb.mps.equipe.grupo5.template.PdfReport;
-import com.ufpb.mps.equipe.grupo5.template.Report;
 
 public class UserView {
     

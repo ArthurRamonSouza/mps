@@ -115,7 +115,6 @@ public class UserController {
         this.userService  = UserServiceFactory.createRepository("collection:");
         return this.userService.findBy(login).get();
     }
-
     public boolean loginUser(String login, String password) {
         this.userService = UserServiceFactory.createRepository("database");
         return this.userService.login(login, password);
