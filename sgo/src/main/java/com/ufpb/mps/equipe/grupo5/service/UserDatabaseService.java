@@ -30,8 +30,8 @@ public class UserDatabaseService implements Service<User> {
     }
 
     @Override
-    public Optional<User> findByLogin(String login) {
-        return userRepository.findByLogin(login);
+    public Optional<User> findBy(Object login) {
+        return userRepository.findByLogin((String) login);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class UserDatabaseService implements Service<User> {
     }
 
     public boolean login(String login, String password) {
-        Optional<User> userOpt = this.findByLogin(login);
+        Optional<User> userOpt = userRepository.findByLogin(login);
         if (userOpt.isPresent()) {
             User user = userOpt.get();
             return user.getPassword().equals(password);

@@ -6,6 +6,9 @@ import java.util.Scanner;
 
 import com.ufpb.mps.equipe.grupo5.facade.UserFacade;
 import com.ufpb.mps.equipe.grupo5.model.User;
+import com.ufpb.mps.equipe.grupo5.service.UserAccessDataService;
+import com.ufpb.mps.equipe.grupo5.template.HtmlReport;
+import com.ufpb.mps.equipe.grupo5.template.PdfReport;
 
 public class UserView {
     
@@ -25,7 +28,8 @@ public class UserView {
             System.out.println("3. Logar no sistema");
             System.out.println("4. Remover usuário");
             System.out.println("5. Desfazer último comando");
-            System.out.println("6. Sair");
+            System.out.println("6. Gerar relatórios");
+            System.out.println("7. Sair");
 
             int in = scanner.nextInt();
             scanner.nextLine();
@@ -36,7 +40,8 @@ public class UserView {
                 case 3 -> loginUser();
                 case 4 -> removeUser();
                 case 5 -> undo();
-                case 6 -> {
+                case 6 -> reports();
+                case 7 -> {
                     System.out.println("Saindo...");
                     return;
                 }
@@ -161,6 +166,36 @@ public class UserView {
         }
     }
 
+    public void reports() {
+    System.out.println("Escolha o tipo de relatório que deseja gerar:");
+    System.out.println("1. Relatório em PDF");
+    System.out.println("2. Relatório em HTML");
+    System.out.println("3. Sair");
+
+    try {
+        int in = scanner.nextInt();
+        scanner.nextLine();
+        UserAccessDataService userAccessDataService = new UserAccessDataService();
+
+        switch (in) {
+            case 1 -> {
+                PdfReport pdfReport = new PdfReport(userAccessDataService);
+                pdfReport.generateReport();
+                System.out.println("Relatório PDF gerado com sucesso.");
+            }
+            case 2 -> {
+                HtmlReport htmlReport = new HtmlReport(userAccessDataService);
+                htmlReport.generateReport();
+                System.out.println("Relatório HTML gerado com sucesso.");
+            }
+            case 3 -> System.out.println("Saindo do menu de relatórios...");
+            default -> System.out.println("Opção inválida. Tente novamente.");
+        }
+    } catch (Exception e) {
+        System.out.println("Erro: Entrada inválida. Tente novamente.");
+        scanner.nextLine();
+    }
+}
     public void undo() {
         this.facade.undo();
     }

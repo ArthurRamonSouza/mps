@@ -26,9 +26,9 @@ public class UserCollectionService implements Service<User> {
     }
 
     @Override
-    public Optional<User> findByLogin(String login) {
+    public Optional<User> findBy(Object login) {
         for (User user : userArray) {
-            if(user.getLogin().equals(login))
+            if(user.getLogin().equals((String) login))
                 return Optional.of(user);
         }
 
@@ -50,12 +50,24 @@ public class UserCollectionService implements Service<User> {
 
     @Override
     public void delete(User userToDelete) {
-        Optional<User> userOptional = findByLogin(userToDelete.getLogin());
+        Optional<User> userOptional = findBy((String) userToDelete.getLogin());
         if (userOptional.isPresent()) {
             userArray.remove(userOptional.get());
             System.out.println(String.format("Usuário %s removido da coleção.", userToDelete.getName()));
         } else {
             System.out.println("Usuário não encontrado para remoção.");
         }
+    }
+
+    @Override
+    public boolean login(String login, String password) {
+        for (int i = 0; i < userArray.size(); i++) {
+            User user = userArray.get(i);
+            if (user.getLogin().equals(login)) {
+                if (user.getPassword().equals(password))
+                return true;
+            }
+        }
+        return false;
     }
 }

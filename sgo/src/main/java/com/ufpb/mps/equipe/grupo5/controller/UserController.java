@@ -3,9 +3,9 @@ package com.ufpb.mps.equipe.grupo5.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ufpb.mps.equipe.grupo5.factory.UserServiceFactory;
 import com.ufpb.mps.equipe.grupo5.model.User;
-import com.ufpb.mps.equipe.grupo5.service.UserCollectionService;
-import com.ufpb.mps.equipe.grupo5.service.UserDatabaseService;
+import com.ufpb.mps.equipe.grupo5.service.Service;
 import com.ufpb.mps.equipe.grupo5.util.LoginValidator;
 import com.ufpb.mps.equipe.grupo5.util.PasswordValidator;
 
@@ -13,13 +13,7 @@ public class UserController {
     
     private static UserController instance;
     
-    private final UserCollectionService userCollectionService;
-    private final UserDatabaseService userDatabaseService;
-
-    private UserController() {
-        this.userCollectionService = new UserCollectionService();
-        this.userDatabaseService = new UserDatabaseService();
-    }
+    private Service<User> userService;
 
     public static synchronized UserController getInstance() {
         if (instance == null) {
@@ -32,7 +26,10 @@ public class UserController {
         try {
             LoginValidator.validateLogin(user.getLogin());
             PasswordValidator.validatePassword(user);
-            userCollectionService.save(user);
+
+            this.userService = UserServiceFactory.createRepository("collection");
+            this.userService.save(user);
+
             System.out.println("Usuário registrado com sucesso na coleção.");
         } catch (Exception e) {
             System.err.println("Erro ao registrar usuário na coleção: " + e.getMessage());
@@ -43,10 +40,27 @@ public class UserController {
         try {
             LoginValidator.validateLogin(user.getLogin());
             PasswordValidator.validatePassword(user);
-            userDatabaseService.save(user);
+           
+            this.userService = UserServiceFactory.createRepository("database");
+            this.userService.save(user);
+            
             System.out.println("Usuário registrado com sucesso no banco de dados.");
         } catch (Exception e) {
             System.err.println("Erro ao registrar usuário no banco de dados: " + e.getMessage());
+        }
+    }
+
+    public void updateUserCollection(User user) {
+        try {
+            LoginValidator.validateLogin(user.getLogin());
+            PasswordValidator.validatePassword(user);
+
+            this.userService = UserServiceFactory.createRepository("collection");
+            this.userService.update(user);
+            
+            System.out.println("Usuário atualizado com sucesso na coleção.");
+        } catch (Exception e) {
+            System.err.println("Erro ao atualizar usuário na coleção: " + e.getMessage());
         }
     }
 
@@ -54,7 +68,10 @@ public class UserController {
         try {
             LoginValidator.validateLogin(user.getLogin());
             PasswordValidator.validatePassword(user);
-            userDatabaseService.save(user);
+
+            this.userService = UserServiceFactory.createRepository("database");
+            this.userService.save(user);
+            
             System.out.println("Usuário atualizado com sucesso no banco de dados.");
         } catch (Exception e) {
             System.err.println("Erro ao atualizar usuário no banco de dados: " + e.getMessage());
@@ -63,7 +80,8 @@ public class UserController {
 
     public void deleteUserDatabase(User user) {
         try {
-            userDatabaseService.delete(user);
+            this.userService = UserServiceFactory.createRepository("database");
+            this.userService.delete(user);
         } catch (Exception e) {
             System.out.println("Erro ao tentar remover o usuário do banco de dados.");
         }
@@ -71,29 +89,34 @@ public class UserController {
 
     public void deleteUserCollection(User user) {
         try {
-            userCollectionService.delete(user);
+            this.userService = UserServiceFactory.createRepository("collection");
+            this.userService.delete(user);
         } catch (Exception e) {
             System.out.println("Erro ao tentar remover o usuário da coleção.");
         }
     }
 
     public List<User> listUsersCollection() {
-        return userCollectionService.findAll().orElse(new ArrayList<User>());
+        this.userService = UserServiceFactory.createRepository("collection");
+        return this.userService.findAll().orElse(new ArrayList<User>());
     }
 
     public List<User> listUsersDatabase() {
-        return userDatabaseService.findAll().orElse(new ArrayList<User>());
+        this.userService = UserServiceFactory.createRepository("database");
+        return this.userService.findAll().orElse(new ArrayList<User>());
     }
 
     public User getUserDatabaseByLogin(String login) {
-        return userDatabaseService.findByLogin(login).get();
+        this.userService = UserServiceFactory.createRepository("database");
+        return this.userService.findBy(login).get();
     }
 
     public User getUserCollectionByLogin(String login) {
-        return userCollectionService.findByLogin(login).get();
+        this.userService  = UserServiceFactory.createRepository("collection:");
+        return this.userService.findBy(login).get();
     }
-
     public boolean loginUser(String login, String password) {
-        return userDatabaseService.login(login, password);
+        this.userService = UserServiceFactory.createRepository("database");
+        return this.userService.login(login, password);
     }
 }
