@@ -1,6 +1,7 @@
 package com.ufpb.mps.equipe.grupo5.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Stack;
 
 import com.ufpb.mps.equipe.grupo5.memento.OrcamentoMemento;
@@ -74,6 +75,18 @@ public class Orcamento {
 
     @Column(name = "bdi")
     private double bdi = 0.0;
+
+    @Column(name = "etapas")
+    @JoinColumn(name = "etapa_id")
+    private List<Etapa> etapas;
+
+    @Column(name = "insumos")
+    @JoinColumn(name = "insumo_id")
+    private List<Insumo> insumos;
+
+    @Column(name = "cotacoes")
+    @JoinColumn(name = "cotacao_id")
+    private List<Cotacao> cotacoes;
 
     @Transient
     private Stack<OrcamentoMemento> mementoHistory = new Stack<>();
