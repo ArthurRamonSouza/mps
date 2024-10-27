@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Stack;
 
+import com.ufpb.mps.equipe.grupo5.builder.OrcamentoBuilder;
 import com.ufpb.mps.equipe.grupo5.memento.OrcamentoMemento;
 
 import jakarta.persistence.*;
@@ -88,8 +89,20 @@ public class Orcamento {
     @JoinColumn(name = "cotacao_id")
     private List<Cotacao> cotacoes;
 
+    @Column(name = "composicoes")
+    @JoinColumn(name = "composicao_id")
+    private List<Composicao> composicoes;
+
     @Transient
     private Stack<OrcamentoMemento> mementoHistory = new Stack<>();
+
+     public Orcamento(OrcamentoBuilder builder) {
+        this.descricao = builder.getDescricao();
+        this.etapas = builder.getEtapas();
+        this.insumos = builder.getInsumos();
+        this.cotacoes = builder.getCotacoes();
+        this.dataCriacao = builder.getDataCriacao();
+    }
 
     @Override
     public String toString() {

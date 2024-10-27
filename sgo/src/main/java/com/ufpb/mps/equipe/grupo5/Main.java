@@ -5,6 +5,10 @@ import java.util.Scanner;
 
 import com.ufpb.mps.equipe.grupo5.view.OrcamentoView;
 import com.ufpb.mps.equipe.grupo5.view.UserView;
+import com.ufpb.mps.equipe.grupo5.view.InsumoView;
+import com.ufpb.mps.equipe.grupo5.view.ComposicaoView;
+import com.ufpb.mps.equipe.grupo5.view.CotacaoView;
+import com.ufpb.mps.equipe.grupo5.view.EtapaView;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,7 +22,11 @@ public class Main {
                 System.out.println("Escolha uma opção:");
                 System.out.println("  1. Gerenciar Usuários");
                 System.out.println("  2. Gerenciar Orçamentos");
-                System.out.println("  3. Sair");
+                System.out.println("  3. Gerenciar Insumos");
+                System.out.println("  4. Gerenciar Composições");
+                System.out.println("  5. Gerenciar Cotações");
+                System.out.println("  6. Gerenciar Etapas");
+                System.out.println("  7. Sair");
                 System.out.println("=============================");
                 System.out.print("Digite a sua escolha: ");
 
@@ -35,6 +43,22 @@ public class Main {
                         orcamentoView.orcamentoMenu();
                     }
                     case 3 -> {
+                        InsumoView insumoView = new InsumoView(scanner);
+                        insumoView.insumoMenu();
+                    }
+                    case 4 -> {
+                        ComposicaoView composicaoView = new ComposicaoView(scanner);
+                        composicaoView.composicaoMenu();
+                    }
+                    case 5 -> {
+                        CotacaoView cotacaoView = new CotacaoView(scanner);
+                        cotacaoView.cotacaoMenu();
+                    }
+                    case 6 -> {
+                        EtapaView etapaView = new EtapaView(scanner);
+                        etapaView.etapaMenu();
+                    }
+                    case 7 -> {
                         System.out.println("\nObrigado por usar o Sistema SGO!");
                         System.out.println("Encerrando o programa...");
                         scanner.close();

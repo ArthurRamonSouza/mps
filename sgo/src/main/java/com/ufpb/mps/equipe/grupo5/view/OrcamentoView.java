@@ -2,20 +2,33 @@ package com.ufpb.mps.equipe.grupo5.view;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 import com.ufpb.mps.equipe.grupo5.facade.OrcamentoFacade;
+import com.ufpb.mps.equipe.grupo5.facade.ComposicaoFacade;
+import com.ufpb.mps.equipe.grupo5.facade.EtapaFacade;
+import com.ufpb.mps.equipe.grupo5.facade.InsumoFacade;
 import com.ufpb.mps.equipe.grupo5.model.Orcamento;
+import com.ufpb.mps.equipe.grupo5.model.Composicao;
+import com.ufpb.mps.equipe.grupo5.model.Etapa;
+import com.ufpb.mps.equipe.grupo5.model.Insumo;
 
 public class OrcamentoView {
 
     private final OrcamentoFacade facade;
     private final Scanner scanner;
+    private final ComposicaoFacade composicaoFacade;
+    private final EtapaFacade etapaFacade;
+    private final InsumoFacade insumoFacade;
 
     public OrcamentoView(Scanner scanner) {
         this.facade = OrcamentoFacade.getInstance(); // Singleton
+        this.composicaoFacade = ComposicaoFacade.getInstance();
+        this.etapaFacade = EtapaFacade.getInstance();
+        this.insumoFacade = InsumoFacade.getInstance();
         this.scanner = scanner;
     }
 
@@ -74,6 +87,11 @@ public class OrcamentoView {
         System.out.println("Digite o valor total:");
         double valorTotal = scanner.nextDouble();
 
+        // Adicionar composições, etapas ou insumos
+        List<Composicao> composicoes = addComposicoes();
+        List<Etapa> etapas = addEtapas();
+        List<Insumo> insumos = addInsumos();
+
         Orcamento orcamento = new Orcamento();
         orcamento.setDescricao(descricao);
         orcamento.setMunicipio(municipio);
@@ -86,7 +104,81 @@ public class OrcamentoView {
         orcamento.setValorTotal(valorTotal);
         orcamento.setDataCriacao(new Date());
 
+        // Adicionar composições, etapas e insumos ao orçamento
+        orcamento.setComposicoes(composicoes);
+        orcamento.setEtapas(etapas);
+        orcamento.setInsumos(insumos);
+
         facade.registerOrcamento(orcamento);
+    }
+
+    private List<Composicao> addComposicoes() {
+        List<Composicao> composicoes = new ArrayList<>();
+        System.out.println("Deseja adicionar composições ao orçamento? (true/false)");
+        boolean adicionar = scanner.nextBoolean();
+        scanner.nextLine();
+        while (adicionar) {
+            System.out.println("Digite o ID da composição para adicionar ao orçamento:");
+            Long id = scanner.nextLong();
+            scanner.nextLine();
+            Composicao composicao = composicaoFacade.findComposicaoById(id);
+            if (composicao != null) {
+                composicoes.add(composicao);
+                System.out.println("Composição adicionada ao orçamento.");
+            } else {
+                System.out.println("Composição não encontrada.");
+            }
+            System.out.println("Deseja adicionar mais composições? (true/false)");
+            adicionar = scanner.nextBoolean();
+            scanner.nextLine();
+        }
+        return composicoes;
+    }
+
+    private List<Etapa> addEtapas() {
+        List<Etapa> etapas = new ArrayList<>();
+        System.out.println("Deseja adicionar etapas ao orçamento? (true/false)");
+        boolean adicionar = scanner.nextBoolean();
+        scanner.nextLine();
+        while (adicionar) {
+            System.out.println("Digite o ID da etapa para adicionar ao orçamento:");
+            Long id = scanner.nextLong();
+            scanner.nextLine();
+            Etapa etapa = etapaFacade.findEtapaById(id);
+            if (etapa != null) {
+                etapas.add(etapa);
+                System.out.println("Etapa adicionada ao orçamento.");
+            } else {
+                System.out.println("Etapa não encontrada.");
+            }
+            System.out.println("Deseja adicionar mais etapas? (true/false)");
+            adicionar = scanner.nextBoolean();
+            scanner.nextLine();
+        }
+        return etapas;
+    }
+
+    private List<Insumo> addInsumos() {
+        List<Insumo> insumos = new ArrayList<>();
+        System.out.println("Deseja adicionar insumos ao orçamento? (true/false)");
+        boolean adicionar = scanner.nextBoolean();
+        scanner.nextLine();
+        while (adicionar) {
+            System.out.println("Digite o ID do insumo para adicionar ao orçamento:");
+            Long id = scanner.nextLong();
+            scanner.nextLine();
+            Insumo insumo = insumoFacade.findInsumoById(id);
+            if (insumo != null) {
+                insumos.add(insumo);
+                System.out.println("Insumo adicionado ao orçamento.");
+            } else {
+                System.out.println("Insumo não encontrado.");
+            }
+            System.out.println("Deseja adicionar mais insumos? (true/false)");
+            adicionar = scanner.nextBoolean();
+            scanner.nextLine();
+        }
+        return insumos;
     }
 
     public void listOrcamentos() {
@@ -106,13 +198,13 @@ public class OrcamentoView {
     }
 
     public void removeOrcamento() {
-        System.out.println("Digite o ID do orcçamento a ser removido:");
+        System.out.println("Digite o ID do orçamento a ser removido:");
         
         try {
             Long id = scanner.nextLong();
             facade.deleteOrcamento(facade.findOrcamentoById(id));
         } catch (Exception e) {
-            System.out.println("Erro: Or~camento não encontrado na base de dados.");
+            System.out.println("Erro: Orçamento não encontrado na base de dados.");
             scanner.nextLine();
         }
     }
