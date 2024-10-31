@@ -1,6 +1,6 @@
 package com.ufpb.mps.equipe.grupo5.util.template;
 
-import com.ufpb.mps.equipe.grupo5.data.service.UserAccessDataService;
+import com.ufpb.mps.equipe.grupo5.business.data.service.UserAccessDataService;
 import com.ufpb.mps.equipe.grupo5.model.UserAccessData;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;

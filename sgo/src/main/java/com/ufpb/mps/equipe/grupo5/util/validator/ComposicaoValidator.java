@@ -2,7 +2,7 @@ package com.ufpb.mps.equipe.grupo5.util.validator;
 
 import java.math.BigDecimal;
 
-import com.ufpb.mps.equipe.grupo5.data.model.Composicao;
+import com.ufpb.mps.equipe.grupo5.business.data.model.Composicao;
 
 public class ComposicaoValidator {
 

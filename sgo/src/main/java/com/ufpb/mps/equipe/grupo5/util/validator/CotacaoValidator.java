@@ -1,6 +1,6 @@
 import java.math.BigDecimal;
 
-import com.ufpb.mps.equipe.grupo5.data.model.Cotacao;
+import com.ufpb.mps.equipe.grupo5.business.data.model.Cotacao;
 
 public class CotacaoValidator {
 
