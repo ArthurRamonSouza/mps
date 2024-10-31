@@ -1,21 +1,21 @@
 package com.ufpb.mps.equipe.grupo5.facade;
 
 import java.util.List;
-import java.util.Stack;
-
 import com.ufpb.mps.equipe.grupo5.comand.Command;
 import com.ufpb.mps.equipe.grupo5.comand.DeleteUserCommand;
 import com.ufpb.mps.equipe.grupo5.comand.RegisterUserCommand;
 import com.ufpb.mps.equipe.grupo5.controller.UserController;
+import com.ufpb.mps.equipe.grupo5.memento.Caretaker;
 import com.ufpb.mps.equipe.grupo5.model.User;
 
 public class UserFacade {
     private static UserFacade instance;
     private final UserController userController;
-    private static Stack<Command> commandHistory = new Stack<>();
+    private final Caretaker caretaker;
 
     private UserFacade() {
         this.userController = UserController.getInstance();
+        this.caretaker = new Caretaker(); // Inicializa o caretaker
     }
 
     public static synchronized UserFacade getInstance(){
@@ -27,6 +27,7 @@ public class UserFacade {
 
     public void executeCommand(Command command) {
         command.execute();
+        caretaker.push(command); // Armazena o comando no Caretaker após execução
     }
 
     public void registerUserCollection(User user) {
@@ -36,13 +37,11 @@ public class UserFacade {
     public void registerUserDatabase(User user) {
         Command command = new RegisterUserCommand(this.userController, user);
         executeCommand(command);
-        commandHistory.push(command);
     }
 
     public void deleteUserDatabase(User user) {
         Command command = new DeleteUserCommand(this.userController, user);
         executeCommand(command);
-        commandHistory.push(command);
     }
 
     public void deleteUserCollection(User user) {
@@ -70,7 +69,6 @@ public class UserFacade {
     }
 
     public void undo() {
-        Command lastCommand = commandHistory.pop();
-        lastCommand.undo();
+        caretaker.undo(); // Desfaz o último comando usando o Caretaker
     }
 }
