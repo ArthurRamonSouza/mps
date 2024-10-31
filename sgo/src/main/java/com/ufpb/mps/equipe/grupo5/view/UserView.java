@@ -4,11 +4,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import com.ufpb.mps.equipe.grupo5.data.service.UserAccessDataService;
 import com.ufpb.mps.equipe.grupo5.facade.UserFacade;
 import com.ufpb.mps.equipe.grupo5.model.User;
-import com.ufpb.mps.equipe.grupo5.service.UserAccessDataService;
-import com.ufpb.mps.equipe.grupo5.template.HtmlReport;
-import com.ufpb.mps.equipe.grupo5.template.PdfReport;
+import com.ufpb.mps.equipe.grupo5.util.template.HtmlReport;
+import com.ufpb.mps.equipe.grupo5.util.template.PdfReport;
 
 public class UserView {
     

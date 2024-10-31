@@ -32,6 +32,7 @@ public class OrcamentoView {
         this.scanner = scanner;
     }
 
+    
     public void orcamentoMenu() {
         while (true) {
             System.out.println("Escolha uma opção:");

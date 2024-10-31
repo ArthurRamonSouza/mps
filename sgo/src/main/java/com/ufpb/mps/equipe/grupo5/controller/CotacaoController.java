@@ -3,10 +3,10 @@ package com.ufpb.mps.equipe.grupo5.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ufpb.mps.equipe.grupo5.data.service.Service;
 import com.ufpb.mps.equipe.grupo5.factory.CotacaoServiceFactory;
 import com.ufpb.mps.equipe.grupo5.model.Cotacao;
-import com.ufpb.mps.equipe.grupo5.service.Service;
-import com.ufpb.mps.equipe.grupo5.util.CotacaoValidator;
+import com.ufpb.mps.equipe.grupo5.util.template.CotacaoValidator;
 
 public class CotacaoController {
 

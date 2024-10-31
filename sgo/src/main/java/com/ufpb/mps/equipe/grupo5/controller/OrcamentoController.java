@@ -3,10 +3,10 @@ package com.ufpb.mps.equipe.grupo5.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ufpb.mps.equipe.grupo5.data.service.Service;
 import com.ufpb.mps.equipe.grupo5.factory.OrcamentoServiceFactory;
 import com.ufpb.mps.equipe.grupo5.model.Orcamento;
-import com.ufpb.mps.equipe.grupo5.service.Service;
-import com.ufpb.mps.equipe.grupo5.util.OrcamentoValidator;
+import com.ufpb.mps.equipe.grupo5.util.template.OrcamentoValidator;
 
 public class OrcamentoController {
 

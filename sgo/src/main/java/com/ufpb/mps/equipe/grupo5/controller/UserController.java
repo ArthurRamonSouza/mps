@@ -3,11 +3,11 @@ package com.ufpb.mps.equipe.grupo5.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ufpb.mps.equipe.grupo5.data.service.Service;
 import com.ufpb.mps.equipe.grupo5.factory.UserServiceFactory;
 import com.ufpb.mps.equipe.grupo5.model.User;
-import com.ufpb.mps.equipe.grupo5.service.Service;
-import com.ufpb.mps.equipe.grupo5.util.LoginValidator;
-import com.ufpb.mps.equipe.grupo5.util.PasswordValidator;
+import com.ufpb.mps.equipe.grupo5.util.template.LoginValidator;
+import com.ufpb.mps.equipe.grupo5.util.template.PasswordValidator;
 
 public class UserController {
     
